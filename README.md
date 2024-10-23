@@ -30,42 +30,28 @@ React Music Player (for handling audio playback)
 
 __Installation__
 
-Clone the Repository
-
-bash
-Copy code
+__Clone the Repository__
 git clone <repository-url>
 cd music-app
-Backend Setup
 
-Navigate to the backend folder:
-bash
-Copy code
-cd backend
-Install backend dependencies:
-bash
-Copy code
+__Backend Setup__
+cd server
 npm install
-Set up Firebase:
+
+__Set up Firebase__:
 Create a Firebase project.
 Add the firebaseConfig in the backend Firebase configuration file.
 Enable Authentication and Firestore in the Firebase console.
-Start the backend server:
-bash
-Copy code
-npm start
-Frontend Setup
 
-Navigate to the frontend folder:
-bash
-Copy code
-cd frontend
-Install frontend dependencies:
-bash
-Copy code
+Start the backend server: npm start
+
+__Frontend Setup__
+cd client
 npm install
+
 Add Firebase configuration for authentication in src/firebaseConfig.js.
-Run the frontend app:
-bash
-Copy code
-npm start
+
+Run the frontend app: npm start
+
+
+
