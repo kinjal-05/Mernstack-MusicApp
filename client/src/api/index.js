@@ -1,6 +1,8 @@
 import axios from "axios";
 
+
 const baseURL = "http://localhost:4000/";
+//const baseURL2 = 'http://localhost:5000/';
 
 export const validateUser = async (token) => {
   try {
@@ -18,8 +20,10 @@ export const validateUser = async (token) => {
 export const getAllArtist = async () => {
   try {
     const res = await axios.get(`${baseURL}api/artists/getAll`);
+    //alert('srror');
     return res.data;
   } catch (error) {
+    
     return null;
   }
 };
@@ -59,23 +63,24 @@ export const deleteAlbumById = async (id) => {
 
 
 
-export const deleteArtistById = async (deleteId) => {
+export const deleteArtistById = async (id) => {
   try {
-    const response = await axios.delete(`${baseURL}/api/artists/delete/${deleteId}`); // Ensure this URL matches your backend route
-    return response.data; // You may not need this if you don't use the response
+    const response = await axios.delete(`${baseURL}api/artists/delete/${id}`);
+    alert(response.data.message); // Show success message
+    return response.data;
   } catch (error) {
-    console.error("Error deleting album:", error);
-    throw error; // Propagate the error for handling in DashboardAlbums
+    console.error('Error deleting artist:', error);
+    alert('Failed to delete artist and songs');
+    throw error;
   }
+    
 };
 
 
 
-
-
-
-
-
+export const updateArtistById = (artistId, updatedData) => {
+  return axios.put(`${baseURL}/api/artists/update/${artistId}`, updatedData);
+};
 
 
 export const getAllUsers = async () => {
@@ -113,6 +118,8 @@ export const getAllAlbums = async () => {
     return null;
   }
 };
+
+
 
 export const changingUserRole = async (userId, role) => {
   try {
@@ -154,9 +161,30 @@ export const saveNewSong = async (data) => {
 
 export const deleteSongById = async (id) => {
   try {
-    const res = axios.delete(`${baseURL}api/songs/delete/${id}`);
-    return res;
+    // Step 1: Send a DELETE request to the API endpoint
+    const res = await axios.delete(`${baseURL}api/songs/delete/${id}`);
+    
+    // Step 2: If the song deletion is successful, also remove it from all albums
+    if (res.data.success) {
+      // Assuming the API returns a success message
+      // Now remove the song from all albums
+      const response = await axios.delete(`${baseURL}/api/albums/delete/${res.album._id}`);
+      
+    }
+    
+    return res.data; // Return the response data
   } catch (error) {
+    console.error("Error deleting song:", error);
+    return null; // Return null in case of an error
+  }
+};
+
+export const updateSongById = async (id, updatedData) => {
+  try {
+    const res = await axios.put(`${baseURL}api/songs/update/${id}`, updatedData);
+    return res.data;
+  } catch (error) {
+    console.error("Error updating song:", error);
     return null;
   }
 };
